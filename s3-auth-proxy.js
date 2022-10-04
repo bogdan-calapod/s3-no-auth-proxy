@@ -36,22 +36,6 @@ var main = function () {
 var handle_request = function (client_request, client_response) {
     try {
         const verificationSigner = new Signer(client_request, logger)
-        const givenClientAuthorization = verificationSigner.authorizationHeader
-        const correctClientAuthorization =
-            verificationSigner.authorizationHeaderFor(
-                accessKeyId,
-                secretAccessKey
-            )
-
-        if (
-            givenClientAuthorization.replace(/\s/g, "") !==
-            correctClientAuthorization.replace(/\s/g, "")
-        ) {
-            logger.error("incorrect authorization", givenClientAuthorization)
-            client_response.writeHead(403)
-            client_response.end()
-            return
-        }
 
         const bucket = client_request.url.split(/[/?]/)[1]
         if (
